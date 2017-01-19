@@ -1,0 +1,60 @@
+﻿<Window x:Class="Mark_Overview.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mark_Overview"
+        mc:Ignorable="d"
+        Title="Mark Overview" Height="350" Width="525" Background="White" MinWidth="350" MinHeight="260" Icon="virus.png">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="lsvOverview" Margin="10" Grid.Row="0" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Topic" DisplayMemberBinding="{Binding Topic}" Width="150" />
+                    <GridViewColumn Header="Mark" DisplayMemberBinding="{Binding Mark}" Width="50"/>
+                    <GridViewColumn Header="Points" DisplayMemberBinding="{Binding Points}" />
+                    <GridViewColumn Header="Max Points" DisplayMemberBinding="{Binding MaxPoints}"/>
+                    <GridViewColumn Header="Average" DisplayMemberBinding="{Binding Avg}"/>
+                    <GridViewColumn Header="Weighting" DisplayMemberBinding="{Binding Weighting}"/>
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date, StringFormat='dd.MM.yyyy'}" />
+
+                </GridView>
+            </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Name}" Foreground="Gray" FontSize="13" />                                                    
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
+        <Image Name="cat" Source="373-emoji_android_cat_face.png" Grid.Column="0" Grid.Row="1" Cursor="Help" Opacity="0.01" KeyDown="Image_KeyDown" Focusable="True"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" >
+            <Button Margin="50,5" Content="Add Subject" Click="Button_Click" />
+            <Button Margin="50,5,50.2,5" Content="Add Mark" Click="Button_Click_1"/>
+        </StackPanel>
+    </Grid>
+</Window>
