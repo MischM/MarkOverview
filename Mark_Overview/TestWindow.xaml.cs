@@ -21,6 +21,7 @@ namespace Mark_Overview
     /// </summary>
     public partial class TestWindow : Window
     {
+        private MainWindow Main; //todo: delete
         public TestWindow(MainWindow main)
         {
             InitializeComponent();
@@ -29,6 +30,7 @@ namespace Mark_Overview
             //{
             //    cmbSub.Items.Add(sub.Description);
             //}
+            Main = main; //todo: delete
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -60,21 +62,35 @@ namespace Mark_Overview
             {
                 MessageBox.Show("Punkte müssen im folgendem Format sein: 23", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            //otdo: Avg & weighting
+            //otdo: Avg & weighting(must)
 
             CreateTest();
         }
 
         private void CreateTest()
         {
-            var test = new Test(cmbSub.SelectedItem.ToString(),
-                                Convert.ToDouble(txtTopic.Text),
-                                Convert.ToDouble(txtPoints.Text),
-                                Convert.ToInt32(txtMaxPoints.Text),
-                                Convert.ToDouble(txtAvg.Text),
-                                Convert.ToDouble(txtWeighting.Text),
-                                DateTime.ParseExact(dtp.SelectedDate.Value.ToString(), "dd.MM.yyyy", new CultureInfo("de-DE")));
-            //this.Close();
+            Test test = null;
+            if (!String.IsNullOrEmpty(txtMark.Text))
+            {
+                test = new Test((Subject)cmbSub.SelectedItem,
+                                    txtTopic.Text,
+                                    Convert.ToDouble(txtMark.Text),
+                                    Convert.ToDouble(txtPoints.Text),
+                                    Convert.ToInt32(txtMaxPoints.Text),
+                                    Convert.ToDouble(txtAvg.Text),
+                                    Convert.ToDouble(txtWeighting.Text),
+                                    DateTime.ParseExact(dtp.SelectedDate.Value.ToString(), "dd.MM.yyyy", new CultureInfo("de-DE")));
+            }
+            else
+            {
+                test = new Test((Subject)cmbSub.SelectedItem,
+                                    txtTopic.Text,
+                                    Convert.ToDouble(txtWeighting.Text),
+                                    dtp.SelectedDate.Value.Date);
+            }
+            //todo: Write test in file
+            Main.Tests.Add(test);
+            this.Close();
         }
     }
 }

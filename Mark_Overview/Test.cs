@@ -43,6 +43,13 @@ namespace Mark_Overview
             Weighting = weight;
             Date = date;
         }
+        public Test(Subject sub, string topic, double weight, DateTime date)
+        {
+            TestSubject = sub;
+            Topic = topic;
+            Weighting = weight;
+            Date = date;
+        }
         #endregion
     }
 }

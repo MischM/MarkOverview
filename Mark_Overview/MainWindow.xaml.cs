@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,22 +53,10 @@ namespace Mark_Overview
 
         public void FillListView()
         {
-            // foreach (var subject in Subjects)
-            //foreach (var test in subject.Tests)
-
             lsvOverview.ItemsSource = Tests;
-            var view = (CollectionView)CollectionViewSource.GetDefaultView(lsvOverview.ItemsSource);
+            ICollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lsvOverview.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("TestSubject.Description");
             view.GroupDescriptions.Add(groupDescription);
-
-            
-            //foreach (var subject in Subjects)
-            //{
-            //    foreach (var test in subject.Tests)
-            //    { 
-            //        lsvOverview.Items.Add(test);
-            //    }
-            //}
         }
     
     #endregion
@@ -90,10 +79,18 @@ namespace Mark_Overview
             window.Show();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)//todo: rename button -.-
         {
             var window = new TestWindow(this);
+            window.Closed += TestWindowClosed;
             window.Show();
+        }
+
+        private void TestWindowClosed(object sender, EventArgs e)
+        {
+            //update the listview
+            ICollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(Tests);
+            view.Refresh();
         }
     }
 }
